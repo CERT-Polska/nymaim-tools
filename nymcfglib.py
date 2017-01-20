@@ -67,9 +67,9 @@ class NymaimExtractor:
     CFG_TTL = 0xe6f7e88d
     CFG_URL = 0x6b02c248
     CFG_DGA_HASH = 0x2aa0aed9
-    CFG_ENC_KEY  = 0x22e60b51
-    CFG_DOMAINS  = 0x1d4b5d09
-    CFG_RSA_KEY  = 0x2f127ffb
+    CFG_ENC_KEY = 0x22e60b51
+    CFG_DOMAINS = 0x1d4b5d09
+    CFG_RSA_KEY = 0x2f127ffb
     CTG_32BIT_TMPL_1 = 0x4c1ad0bb
     CTG_32BIT_TMPL_2 = 0x1ae78782
     CTG_64BIT_TMPL = 0xf34a67ff

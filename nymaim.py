@@ -3,7 +3,6 @@
 import argparse
 
 import printer
-import pprint
 
 import keys
 import nymaimlib
@@ -22,8 +21,10 @@ def parse_args():
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('--pcap', '-p', action='store_true', help='parse pcap, extract webinjects and binaries')
     group.add_argument('--blob', '-b', action='store_true', help='parse raw blob, extract webinjects and binaries')
-    group.add_argument('--resp', '-r', action='store_true', help='parse raw response, extract webinjects and binaries')
-    group.add_argument('--conf', '-c', action='store_true', help='parse dump, extract static config')
+    group.add_argument('--response', '-r', action='store_true', help='parse raw response, extract webinjects and binaries')
+    group.add_argument('--config', '-c', action='store_true', help='parse dump, extract static config')
+    group.add_argument('--deobfuscate', '-d', action='store_true', help='deobfuscate dump, write deobfuscated file')
+    group.add_argument('--decrypt-data', '-a', action='store_true', help='decrypt data section, write decrypted file back')
 
     return parser.parse_args()
 
@@ -45,14 +46,30 @@ def main():
     elif args.blob:
         with open(args.data, 'rb') as data:
             nymaimlib.nymaim_blob_parse(data.read(), {'is_response': False}, rsakey)
-    elif args.resp:
+    elif args.response:
         with open(args.data, 'rb') as data:
             nymaimlib.parse_raw_response(data.read(), {'is_response': False}, rsakey, rc4key)
-    elif args.conf:
+    elif args.config:
         with open(args.data, 'rb') as data:
             cfg = nymcfglib.extract_config(data.read())
             import json
             print json.dumps(cfg, sort_keys=True, indent=2,separators=(',', ': '), ensure_ascii=False)
+    elif args.deobfuscate:
+        import deobfuscator.rules.nymaim as nymaimrls
+        from deobfuscator.commons import Deobfuscator
+        with open(args.data, 'rb') as data:
+            raw = bytearray(data.read())
+            rules = nymaimrls.all_rules
+            deobfuscator = Deobfuscator(rules, path=args.data)
+            raw = deobfuscator.deobfuscate(raw)
+            open(args.data + '.deobfuscated', 'wb').write(raw)
+    elif args.decrypt_data:
+        from deobfuscator.rules.nymaim_base import decrypt_raw_all
+        with open(args.data, 'rb') as data:
+            nymaim = bytearray(data.read())
+            plain = decrypt_raw_all(nymaim)
+            open(args.data + '.decrypted', 'wb').write(plain)
+
 
 if __name__ == '__main__':
     main()
