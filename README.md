@@ -95,4 +95,4 @@ Decrypt data section of memory dump:
     ./nymaim.py -a ~/nymaim_dumps/obfuscated/dropper_80009_2015-12-02_xxxxxxxx_xjxf_x_0bca5fa425928678447534f4702f3ba4 
 
 
-In case of any questions, please email msm@cert.pl or info@cert.pl.
+In case of any questions, please email [msm@cert.pl] or [info@cert.pl].
