@@ -25,6 +25,8 @@ Parser for nymaim's static configuration.
 
 Main file, command line interface for other scripts.
 
+### Help
+
 ```
 ╰─$ ./nymaim.py --help
 usage: nymaim.py [-h] [--quiet] [--keyset KEYSET]
@@ -44,5 +46,36 @@ optional arguments:
   --resp, -r            parse raw response, extract webinjects and binaries
   --conf, -c            parse unpacked memory dump, extract static config
 ```
+
+
+Difference between --pcap, --resp and --blob:
+
+* --pcap automatically splits .pcap file into tcp streams, and parses them independently
+* --resp parses single tcp stream
+* --blob parses single tcp stream after rc4 decryption
+
+**Usage examples:**
+
+Parse old .pcap capture file (with older keyset)
+
+    ./nymaim.py --pcap /home/msm/PycharmProjects/NymaimCnC/datadump2.pcap --keyset=1
+
+    [snip]
+
+Parse memory dump
+
+    ╰─$ ./nymaim.py --quiet --conf ~/nymaim_dumps/obfuscated/dropper_80007_2015-11-06_xxxxxxxx_xjxf_x_553bcd6ac24c63a288161e6364ed5cb3
+    {
+      "dns": [
+        "8.8.8.8:53",
+        "8.8.4.4:53"
+      ],
+      "domains": [
+        {
+          "cnc": "http://yckmgk.in"
+        }
+      ],
+      [snip]
+    }
 
 In case of any questions, please email msm@cert.pl or info@cert.pl.
