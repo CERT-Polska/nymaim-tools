@@ -39,10 +39,10 @@ optional arguments:
   --quiet, -q           be silent
   --keyset KEYSET, -k KEYSET
                         0, 1 or 2 - set of encryption keys to use
-  --pcap, -p            parse pcap, extract webinjects and binaries
-  --blob, -b            parse raw blob, extract webinjects and binaries
+  --pcap, -p            parse pcap capture, extract webinjects and binaries
+  --blob, -b            parse raw message blob, extract webinjects and binaries
   --resp, -r            parse raw response, extract webinjects and binaries
-  --conf, -c            parse dump, extract static config
+  --conf, -c            parse unpacked memory dump, extract static config
 ```
 
 In case of any questions, please email msm@cert.pl or info@cert.pl.
