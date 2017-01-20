@@ -56,7 +56,7 @@ def parse_pcap_file(filename, data_callback, req_ip):
                 iii += 1
 
             if http.body:
-                print '\n\n'
+                pprint('\n\n')
                 if isinstance(http, dpkt.http.Response):
                     pprint('HTTP', '<<<', http.status, ',', len(http.body), 'bytes', dstip, '<<<', srcip)
                 else:
@@ -69,7 +69,7 @@ def parse_pcap_file(filename, data_callback, req_ip):
                 try:
                     data_callback(http.body, isinstance(http, dpkt.http.Response))
                 except Exception as e:
-                    print 'ERROR', str(e), repr(e)
+                    pprint('ERROR', str(e), repr(e))
                 zero_indent()
 
             if splitfiles:
