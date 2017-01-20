@@ -45,6 +45,8 @@ optional arguments:
   --blob, -b            parse raw message blob, extract webinjects and binaries
   --resp, -r            parse raw response, extract webinjects and binaries
   --conf, -c            parse unpacked memory dump, extract static config
+  --deobfuscate, -d     deobfuscate dump, write deobfuscated file
+  --decrypt-data, -a    decrypt data section, write decrypted file back
 ```
 
 
@@ -53,6 +55,12 @@ Difference between --pcap, --resp and --blob:
 * --pcap automatically splits .pcap file into tcp streams, and parses them independently
 * --resp parses single tcp stream
 * --blob parses single tcp stream after rc4 decryption
+
+Difference between --deobfuscate and --decrypt-data
+* --deobfuscate is deobfuscating code section, leaving data section untouched
+* --decrypt-data decrypts data section, leaving code section untouched
+
+If you need more flexible decryptor, check `deobfuscator/nymaim_cli.py`.
 
 **Usage examples:**
 
@@ -77,5 +85,14 @@ Parse memory dump, without printing too much on stdout:
       ],
       [snip]
     }
+
+Deobfuscate memory dump:
+
+    ./nymaim.py -d ~/nymaim_dumps/obfuscated/dropper_80009_2015-12-02_xxxxxxxx_xjxf_x_0bca5fa425928678447534f4702f3ba4 
+
+Decrypt data section of memory dump:
+
+    ./nymaim.py -a ~/nymaim_dumps/obfuscated/dropper_80009_2015-12-02_xxxxxxxx_xjxf_x_0bca5fa425928678447534f4702f3ba4 
+
 
 In case of any questions, please email msm@cert.pl or info@cert.pl.
