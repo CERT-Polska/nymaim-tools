@@ -56,13 +56,13 @@ Difference between --pcap, --resp and --blob:
 
 **Usage examples:**
 
-Parse old .pcap capture file (with older keyset)
+Parse old .pcap capture file (with older keyset):
 
     ./nymaim.py --pcap /home/msm/PycharmProjects/NymaimCnC/datadump2.pcap --keyset=1
 
     [snip]
 
-Parse memory dump
+Parse memory dump, without printing too much on stdout:
 
     ╰─$ ./nymaim.py --quiet --conf ~/nymaim_dumps/obfuscated/dropper_80007_2015-11-06_xxxxxxxx_xjxf_x_553bcd6ac24c63a288161e6364ed5cb3
     {
