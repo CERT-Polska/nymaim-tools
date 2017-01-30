@@ -2,6 +2,8 @@
 
 This is a set of tools we have created for analysis and tracking Nymaim trojan.
 
+Article with technical analysis and details: https://www.cert.pl/en/news/single/nymaim-revisited/
+
 A word of warning:
 This repository is amalgam of various loosely matching scripts, that we hacked into single
 repository at the last minute. We never used this repository as is, instead we
