@@ -4,13 +4,8 @@ from printer import *
 
 
 def parse_pcap_file(filename, data_callback, req_ip):
-    splitfiles = False
     f = open(filename, 'rb')
     pcap = dpkt.pcap.Reader(f)
-
-    if splitfiles:
-        sout = sys.stdout
-        iii = 0
 
     if req_ip is not None:
         req_ip = ''.join(chr(int(c)) for c in req_ip.split('.'))
@@ -51,10 +46,6 @@ def parse_pcap_file(filename, data_callback, req_ip):
             else:
                 http = dpkt.http.Request(stream)
 
-            if splitfiles:
-                sys.stdout = open('queries/' + str(iii) + '.txt', 'wb')
-                iii += 1
-
             if http.body:
                 pprint('\n\n')
                 if isinstance(http, dpkt.http.Response):
@@ -72,9 +63,6 @@ def parse_pcap_file(filename, data_callback, req_ip):
                     pprint('ERROR', str(e), repr(e))
                 zero_indent()
 
-            if splitfiles:
-                sys.stdout.close()
-
             stream = stream[len(http):]
             if len(stream) == 0:
                 del conn[tupl]
@@ -83,6 +71,4 @@ def parse_pcap_file(filename, data_callback, req_ip):
         except dpkt.UnpackError as e:
             pass
 
-    if splitfiles:
-        sys.stdout = sout
     f.close()
