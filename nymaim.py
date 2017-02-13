@@ -9,6 +9,7 @@ import nymaimlib
 import nymcnclib
 import nymcfglib
 import pcapextract
+import json
 
 
 def parse_args():
@@ -25,6 +26,7 @@ def parse_args():
     group.add_argument('--config', '-c', action='store_true', help='parse dump, extract static config')
     group.add_argument('--deobfuscate', '-d', action='store_true', help='deobfuscate dump, write deobfuscated file')
     group.add_argument('--decrypt-data', '-a', action='store_true', help='decrypt data section, write decrypted file back')
+    group.add_argument('--communicate', '-m', action='store_true', help='download everything from cnc')
 
     return parser.parse_args()
 
@@ -52,7 +54,6 @@ def main():
     elif args.config:
         with open(args.data, 'rb') as data:
             cfg = nymcfglib.extract_config(data.read())
-            import json
             print json.dumps(cfg, sort_keys=True, indent=2,separators=(',', ': '), ensure_ascii=False)
     elif args.deobfuscate:
         import deobfuscator.rules.nymaim as nymaimrls
@@ -69,6 +70,12 @@ def main():
             nymaim = bytearray(data.read())
             plain = decrypt_raw_all(nymaim)
             open(args.data + '.decrypted', 'wb').write(plain)
+    elif args.communicate:
+        with open(args.data, 'rb') as data:
+            cfg = json.loads(data.read())
+            cfg['rc4_key'] = rc4key
+            cfg['rsa_key'] = rsakey
+            nymcnclib.communicate_as_payload(cfg)
 
 
 if __name__ == '__main__':
