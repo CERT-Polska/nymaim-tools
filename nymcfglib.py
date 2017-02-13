@@ -117,7 +117,7 @@ class NymaimExtractor:
         parsed = {'domains': [], 'urls': [], 'dns': [], 'type': 'nymaim'}
         for hash, raw in NymCfgStream(blob):
             try:
-                pprint("<{}>: {}".format(hash, raw.encode('hex') if len(raw) == 4 else raw))
+                pprint("<{:08x}>: {}".format(hash, raw.encode('hex') if len(raw) == 4 else raw))
                 if hash == self.CFG_URL:  # '48c2026b':
                     parsed['urls'] += [{'url': append_http(raw[20:].rstrip(';'))}]
                 elif hash == self.CFG_DGA_HASH:  # 'd9aea02a':
